@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Change Time Capsule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 🌍 Background Image + Overlay */
+        body {
+            background: url("images/earth.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.6); /* Overlay for readability */
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(to right, #1a5276, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .search-section {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .search-section input {
+            padding: 0.7rem 1rem;
+            width: 500px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #3498db;
+        }
+
+        .search-section button {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .search-section button:hover {
+            background-color: #1a5276;
+        }
+
+        .result {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .location-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .preview-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: scale(1.03);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .preview-card:hover .preview-image img {
+            transform: scale(1.1);
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+        }
+
+        .preview-content h3 {
+            color: #1a5276;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: #1a5276;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, #1a5276, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .search-section {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .search-section input {
+            padding: 0.7rem 1rem;
+            width: 500px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #3498db;
+        }
+
+        .search-section button {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .search-section button:hover {
+            background-color: #1a5276;
+        }
+
+        .result {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .location-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .preview-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: scale(1.03);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .preview-card:hover .preview-image img {
+            transform: scale(1.1);
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+        }
+
+        .preview-content h3 {
+            color: #1a5276;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: #1a5276;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Climate Change Time Capsule</h1>
+        <p class="subtitle">Witness the transformation of our planet through satellite imagery</p>
+    </header>
+
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" id="searchInput"
+                placeholder="Enter any of the below locations or enter your preferred location">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result" class="result"></div>
+
+        <!-- Featured Locations -->
+        <h2 style="text-align:center; color:#1a5276; margin-bottom:1.5rem;">Featured Locations</h2>
+        <section class="location-preview">
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/columbia.jpg" alt="Glacier">
+
+                </div>
+                <div class="preview-content">
+                    <h3>Columbia Glacier</h3>
+                    <p>Alaska's rapidly retreating glacier, lost half its volume since the 1980s.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/amazon.jpg" alt="Glacier">
+                </div>
+                <div class="preview-content">
+                    <h3>Amazon Rainforest</h3>
+                    <p>Deforestation and climate impacts on the world's largest tropical forest.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/sea ice.webp" alt="Arctic sea ice">
+                </div>
+                <div class="preview-content">
+                    <h3>Arctic Sea Ice</h3>
+                    <p>Dramatic reduction in summer sea ice extent due to polar warming.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/reef.jpg" alt="reef">
+                </div>
+                <div class="preview-content">
+                    <h3>Great Barrier Reef</h3>
+                    <p>Mass coral bleaching events threatening the world's largest reef system.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/icesheet.jpg" alt="icesheet">
+                </div>
+                <div class="preview-content">
+                    <h3>Greenland ice sheet</h3>
+                    <p>Climate change is speeding up Greenland Ice Sheet melt, raising sea levels,
+                        disrupting ocean currents, and forming new ecosystems.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/lake.jpg" alt="lake">
+                </div>
+                <div class="preview-content">
+                    <h3>Lake Chad</h3>
+                    <p>Lake Chad is shrinking due to climate change, with rising temperatures and reduced
+                        rainfall causing water loss, desertification, and threats to local livelihoods.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/kili.jpg" alt="kilimajaro">
+                </div>
+                <div class="preview-content">
+                    <h3>Mount Kilimanjaro</h3>
+                    <p>Mount Kilimanjaro is losing its ice cover rapidly due to climate change,
+                        with glaciers shrinking from rising temperatures and reduced snowfall.</p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/aral.jpg" alt="aralsea">
+                </div>
+                <div class="preview-content">
+                    <h3>Aral Sea</h3>
+                    <p>The Aral Sea has drastically shrunk due to climate change and water diversion,
+                        leaving behind deserts, collapsing fisheries, and severe ecological damage.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/fire.jpg" alt="wildfire">
+                </div>
+                <div class="preview-content">
+                    <h3>Mediterranean Wildfires</h3>
+                    <p>The Mediterranean is experiencing more frequent and intense
+                        wildfires due to rising temperatures, prolonged droughts, and stronger heatwaves driven by
+                        climate change.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/drought.jpg" alt="drought">
+                </div>
+                <div class="preview-content">
+                    <h3>Oklahoma</h3>
+                    <p>Oklahoma faces worsening droughts as climate change
+                        drives hotter temperatures, reduced rainfall, and more frequent extreme dry spells, impacting
+                        farms and water supplies.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/fire2.jpg" alt="wildfire">
+                </div>
+                <div class="preview-content">
+                    <h3>California</h3>
+                    <p>California wildfires are intensifying due to climate change, with hotter temperatures,
+                        prolonged droughts, and stronger winds fueling more frequent and destructive fires.
+
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/flood.jpg" alt="flood">
+                </div>
+                <div class="preview-content">
+                    <h3>Venice</h3>
+                    <p>Venice is experiencing worsening flooding as climate change
+                        causes sea levels to rise and extreme high tides to become more frequent.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/flood2.jpg" alt="flood">
+                </div>
+                <div class="preview-content">
+                    <h3>Jakarta</h3>
+                    <p>Rising seas, heavier rainfall, and land subsidence put the city at constant risk.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/fire3.jpg" alt="fire">
+                </div>
+                <div class="preview-content">
+                    <h3>Sydney</h3>
+                    <p>Sydney is facing more severe fires, with hotter temperatures,
+                        prolonged dry spells, and strong winds fueling their frequency and intensity.
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/deadsea.jpg" alt="deadsea">
+                </div>
+                <div class="preview-content">
+                    <h3>Dead sea</h3>
+                    <p>The Dead Sea is shrinking rapidly as water levels drop from
+                        reduced inflow and high evaporation, leading to ecological and economic impacts.
+
+                    </p>
+                </div>
+            </div>
+            <div class="preview-card">
+                <div class="preview-image">
+                    <img src="images/desert.jpg" alt="desert">
+                </div>
+                <div class="preview-content">
+                    <h3>Sahara Desert</h3>
+                    <p>the Sahara Desert has expanded and become hotter, with reduced rainfall and increased
+                        desertification affecting ecosystems and local communities.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Climate Change Time Capsule | Data Source: NASA Earth Observatory</p>
+        <p>Educational project to visualize climate change impacts</p>
+    </footer>
+
+    <script>
+        const locationData = {
+            "columbia glacier": {
+                before: "images/c1.jpg",
+                after: "images/c2.jpg",
+                description: "Columbia Glacier in Alaska has retreated dramatically due to rising temperatures, losing over 20 km of ice in just a few decades."
+            },
+            "amazon rainforest": {
+                before: "images/a1.jpg",
+                after: "images/a2.jpg",
+                description: "The Amazon rainforest is shrinking rapidly because of deforestation and fires, impacting biodiversity and the global carbon balance."
+            },
+            "arctic sea ice": {
+                before: "images/art1.jpg",
+                after: "images/art2.jpg",
+                description: "Arctic sea ice has been melting faster each summer, reducing habitat for polar species and raising global sea levels."
+            },
+            "great barrier reef": {
+                before: "images/g1.png",
+                after: "images/g2.png",
+                description: "The Great Barrier Reef has suffered severe coral bleaching events due to rising sea temperatures and ocean acidification."
+            },
+            "greenland ice sheet": {
+                before: "images/greenland1.jpg",
+                after: "images/greenland2.jpg",
+                description: "Between 1990 and 2025, the Greenland ice sheet has experienced accelerated melting due to rising global temperatures, contributing significantly to sea level rise. This period saw a marked increase in surface melt, ice discharge, and loss of ice mass, especially after the early 2000s.."
+            },
+            "lake chad": {
+                before: "images/chad1.jpg",
+                after: "images/chad2.jpg",
+                description: "LBetween 1990 and 2025, Lake Chad’s size fluctuated but showed long-term decline, driven by warming temperatures, drought, and growing water demand."
+            },
+            "mount kilimanjaro": {
+                before: "images/kili1.jpg",
+                after: "images/kili2.jpg",
+                description: "Mount Kilimanjaro has experienced significant glacier retreat due to rising temperatures and changing precipitation patterns linked to climate change. Over 80% of its ice cover has disappeared, with a sharp decline continuing in recent decades."
+            },
+            "aral sea": {
+                before: "images/aral1.jpg",
+                after: "images/aral2.jpg",
+                description: "The Aral Sea has drastically shrunk due to large-scale irrigation projects that diverted its feeder rivers, leading to severe ecological, economic, and health consequences. Once the fourth-largest lake in the world, it has largely dried up, leaving behind polluted salt flats and collapsing local fisheries"
+            },
+            "mediterranean wildfires": {
+                before: "images/med1.jpg",
+                after:"images/med2.jpg",
+                description: "Between 1990 and 2024, the Mediterranean region experienced a significant escalation in wildfire activity, driven by climate change. This period saw an increase in the frequency, intensity, and duration of wildfires, leading to substantial environmental, economic, and social impacts."
+            },
+            "oklahoma drought": {
+                before: "images/oklahoma1.jpg",
+                after: "images/oklahoma2.jpg",
+                description: "Over the past 30 years, Oklahoma has faced increasingly severe droughts, particularly during 2010–2015 and 2020–2023, with hotter temperatures and reduced rainfall causing prolonged dry spells, crop losses, and strained water resources."
+            },
+            "california wildfires": {
+                before:"images/cali1.jpg",
+                after: "images/cali2.jpg",
+                description: "Over the past few decades, especially from 2015 to 2023, California has seen increasingly intense wildfires fueled by rising temperatures, prolonged droughts, and strong winds, causing massive destruction and loss of life."
+            },
+            "venice flooding": {
+                before: "images/venice1.jpg",
+                after: "images/venice2.jpg",
+                description: "Since the early 2000s, Venice has faced more frequent and severe flooding as rising sea levels and higher tides have increasingly submerged parts of the city."
+            },
+            "jakarta flooding": {
+                before: "images/jaka1.jpg",
+                after: "images/jaka2.jpg",
+                description: "“Since the 2000s, Jakarta has experienced worsening floods, with heavier rainfall, rising sea levels, and rapid land subsidence frequently submerging large parts of the city."
+            },
+            "sydney fires": {
+                before: "images/sydney1.jpg",
+                after: "images/sydney2.jpg",
+                description: "Since the late 1990s, Sydney and surrounding regions have faced increasingly severe bushfires, with extreme heat, prolonged droughts, and strong winds fueling massive fire seasons like those of 2002–2003 and 2019–2020."
+            },
+            "dead sea": {
+                before: "images/dead1.jpg",
+                after: "images/dead2.jpg",
+                description: "The Dead Sea is shrinking rapidly as water is diverted from the Jordan River, worsened by climate stress."
+            },
+            "sahara desert": {
+                before: "images/sahara1.jpg",
+                after: "images/sahara2.jpg",
+                description: "Over the past few decades (roughly 1980s–2020s), the Sahara Desert has experienced increased temperatures and reduced rainfall, leading to accelerated desertification, expanding sand dunes, and stressed ecosystems."
+            },
+        };
+
+        document.getElementById("searchBtn").addEventListener("click", async () => {
+            const place = document.getElementById("searchInput").value.trim().toLowerCase();
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "<p>Loading...</p>";
+
+            // Case 1: Predefined location
+            if (locationData[place]) {
+                const loc = locationData[place];
+                resultDiv.innerHTML = `
+                    <h2>${place.toUpperCase()}</h2>
+                    <p>${loc.description}</p>
+                    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+                        <div>
+                            <h4>Before</h4>
+                            
+                                   <img src="${loc.before}" style="max-width:400px; border-radius:10px;"/>
+                            
+                        </div>
+                        <div>
+                            <h4>After</h4>
+                            
+                                <img src="${loc.after}" style="max-width:400px; border-radius:10px;"/>
+                           
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Case 2: Fetch climate data for user-entered location
+            try {
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${place}`);
+                const geoJson = await geoRes.json();
+
+                if (!geoJson.results || geoJson.results.length === 0) {
+                    resultDiv.innerHTML = `<p>No data found for "${place}". Please try another location.</p>`;
+                    return;
+                }
+
+                const { latitude, longitude, name, country } = geoJson.results[0];
+
+                const climateRes = await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}&start_date=2020-01-01&end_date=2023-12-31&daily=temperature_2m_mean,precipitation_sum&timezone=auto`);
+                const climateJson = await climateRes.json();
+
+                if (climateJson && climateJson.daily) {
+                    const daily = climateJson.daily;
+                    const dates = daily.time;
+                    const temps = daily.temperature_2m_mean;
+                    const precs = daily.precipitation_sum;
+
+                    const yearlyData = {};
+                    dates.forEach((d, i) => {
+                        const year = new Date(d).getFullYear();
+                        if (!yearlyData[year]) yearlyData[year] = { temps: [], precs: [] };
+                        yearlyData[year].temps.push(temps[i]);
+                        yearlyData[year].precs.push(precs[i]);
+                    });
+
+                    let summaryHtml = `<h2>Climate Data for ${name}, ${country}</h2><ul>`;
+                    for (const year in yearlyData) {
+                        const avgTemp = (yearlyData[year].temps.reduce((a, b) => a + b, 0) / yearlyData[year].temps.length).toFixed(2);
+                        const totalPrecip = yearlyData[year].precs.reduce((a, b) => a + b, 0).toFixed(2);
+                        summaryHtml += `<li><b>${year}:</b> Avg Temp = ${avgTemp} °C, Rainfall = ${totalPrecip} mm</li>`;
+                    }
+                    summaryHtml += "</ul>";
+
+                    resultDiv.innerHTML = summaryHtml;
+                }
+            } catch (err) {
+                console.error(err);
+                resultDiv.innerHTML = `<p>Something went wrong while fetching climate data.</p>`;
+            }
+        });
+    </script>
+</body>
+
+</html>
