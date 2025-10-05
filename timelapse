@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Change Time Capsule</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #121212; color: #f0f0f0; display: flex; flex-direction: column; align-items: center; padding: 2rem; }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      background-clip: text; /* standard property fallback */
+      -webkit-background-clip: text; /* Chrome/Safari support */
+      -webkit-text-fill-color: transparent; /* necessary for clipping text */
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow { 
+      0% { filter: drop-shadow(0 0 5px #4facfe); } 
+      100% { filter: drop-shadow(0 0 20px #00f2fe); } 
+    }
+
+    .timelapse { max-width: 800px; width: 100%; margin: 2rem 0; text-align: center; }
+    video { width: 100%; border-radius: 12px; box-shadow: 0 0 20px rgba(0,255,255,0.3); }
+    p { margin-top: 1rem; font-size: 1rem; line-height: 1.5; color: #cccccc; }
+
+    @media (max-width: 600px) { 
+      h1 { font-size: 1.5rem; } 
+      p { font-size: 0.9rem; } 
+    }
+
+    .location-input { margin-bottom: 2rem; text-align: center; }
+    select { padding: 0.5rem 1rem; border-radius: 8px; border: none; background: #333; color: #fff; cursor: pointer; transition: 0.3s; }
+    select:hover { background: #444; }
+  </style>
+</head>
+<body>
+
+  <h1>🌎 Climate Change Time Capsule</h1>
+
+  <div class="location-input">
+    <select id="location-select" onchange="updateTimelapse()">
+      <option value="dubai">Dubai</option>
+      <option value="amazon">Amazon Rainforest</option>
+      <option value="venice">Venice</option>
+      <option value="addisababa">Addis Ababa, Ethiopia</option>
+      <option value="pucallpa">Pucallpa, Peru</option>
+    </select>
+  </div>
+
+  <section class="timelapse">
+    <h2 id="timelapse-title">Timelapse: Dubai (1984 → 2025)</h2>
+    <video id="timelapse-video" controls autoplay loop muted>
+      <source src="https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/dubai.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p id="timelapse-caption">
+      This NASA Landsat-based timelapse shows Dubai’s dramatic transformation — from desert sands in 2000 to a vibrant urban landscape in 2025.
+    </p>
+  </section>
+
+  <script>
+    const timelapseLinks = {
+      dubai: "https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/dubai.mp4",
+      amazon: "https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/rondonia-brazil.mp4",
+      venice: "https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/venice-italy.mp4",
+      addisababa: "https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/addis-ababa-ethiopia.mp4",
+      pucallpa: "https://storage.googleapis.com/earthengine-timelapse/2020/curated/mp4/label/3x/pucallpa-peru.mp4"
+    };
+
+    const captions = {
+      dubai: "This NASA Landsat-based timelapse shows Dubai’s dramatic transformation — from desert sands in 2000 to a vibrant urban landscape in 2025.",
+      amazon: "This timelapse highlights deforestation in the Amazon Rainforest, showcasing the environmental impact over 25 years.",
+      venice: "This timelapse shows changes in Venice’s urban landscape and water patterns over the last 25 years.",
+      addisababa: "Witness the rapid urbanization of Addis Ababa, Ethiopia, as it evolves over the past two decades.",
+      pucallpa: "View the meandering rivers and deforestation patterns in Pucallpa, Peru, part of the Amazon Basin."
+    };
+
+    const titles = {
+      dubai: "Timelapse: Dubai (2000 → 2025)",
+      amazon: "Timelapse: Amazon Rainforest (2000 → 2025)",
+      venice: "Timelapse: Venice (2000 → 2025)",
+      addisababa: "Timelapse: Addis Ababa (2000 → 2025)",
+      pucallpa: "Timelapse: Pucallpa, Peru (2000 → 2025)"
+    };
+
+    function updateTimelapse() {
+      const loc = document.getElementById("location-select").value;
+      const video = document.getElementById("timelapse-video");
+      const source = video.querySelector('source'); 
+      const title = document.getElementById("timelapse-title");
+      const caption = document.getElementById("timelapse-caption");
+
+      if (source) {
+        source.src = timelapseLinks[loc];
+      } else {
+        video.src = timelapseLinks[loc];
+      }
+
+      title.textContent = titles[loc];
+      caption.textContent = captions[loc];
+      video.load();
+    }
+  </script>
+
+</body>
+</html>
