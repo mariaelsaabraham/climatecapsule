@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NASA Climate Capsule 🌎</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+/* ===== 🌌 GENERAL THEME ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body {
+  background: radial-gradient(circle at top left, #0b1d3a, #020611);
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ===== 🛰 HEADER ===== */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+h1 {
+  color: #4fc3f7;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+.subtitle {
+  color: #90a4ae;
+  margin-top: 0.3rem;
+  font-size: 1.1rem;
+}
+
+/* ===== 🔍 SEARCH BAR ===== */
+.search-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+.search-box {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(20,30,45,0.9);
+  border-radius: 40px;
+  padding: 0.6rem 1rem;
+  border: 1px solid #4fc3f7;
+}
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  width: 260px;
+  font-size: 1rem;
+}
+.search-input::placeholder { color: #b0bec5; }
+.search-btn {
+  background: #4fc3f7;
+  border: none;
+  color: #0a192f;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 0.6rem 1.2rem;
+  margin-left: 0.6rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.search-btn:hover { background: transparent; color: #4fc3f7; border: 1px solid #4fc3f7; }
+
+/* ===== 🌦 WEATHER SECTION ===== */
+.weather-section {
+  max-width: 900px;
+  margin: auto;
+  display: none;
+  background: rgba(18, 18, 36, 0.85);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
+.location-name {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #81d4fa;
+  margin-bottom: 1rem;
+}
+.weather-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.weather-card {
+  width: 180px;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(145deg, #101830, #08101e);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s;
+}
+.weather-card:hover { transform: translateY(-6px); }
+.weather-icon {
+  font-size: 2rem;
+  color: #4fc3f7;
+  margin-bottom: 0.4rem;
+}
+.weather-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.weather-label {
+  color: #b0bec5;
+  font-size: 0.9rem;
+}
+
+/* ===== ☀ FORECAST ===== */
+.forecast {
+  margin-top: 2rem;
+  background: rgba(25, 25, 45, 0.8);
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+.forecast h3 {
+  text-align: center;
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+}
+.forecast-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.forecast-day {
+  text-align: center;
+  padding: 0.8rem;
+}
+.forecast-day strong {
+  display: block;
+  color: #81d4fa;
+  font-size: 1.1rem;
+}
+
+/* ===== 📜 DESCRIPTION ===== */
+.description {
+  margin-top: 2rem;
+  text-align: center;
+  color: #cfd8dc;
+  background: rgba(30, 30, 46, 0.6);
+  border-radius: 12px;
+  padding: 1.3rem;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* ===== 💬 LOADER / ERROR ===== */
+.loading, .error-message {
+  text-align: center;
+  margin-top: 1rem;
+  display: none;
+}
+.loading { color: #4fc3f7; }
+.error-message { color: #f44336; }
+
+/* ===== ⚙ FOOTER ===== */
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #90a4ae;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>NASA Climate Change Capsule</h1>
+  <p class="subtitle">Explore live climate and weather conditions anywhere on Earth 🌍</p>
+</header>
+
+<section class="search-section">
+  <div class="search-box">
+    <i class="fas fa-location-dot" style="color:#4fc3f7; margin-right:0.5rem;"></i>
+    <input type="text" id="locationInput" class="search-input" placeholder="Enter a city or region..." required>
+    <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+  </div>
+</section>
+
+<div class="loading" id="loading">Fetching live climate data...</div>
+<div class="error-message" id="errorMessage"></div>
+
+<section class="weather-section" id="weatherSection">
+  <div class="location-name" id="regionName">--</div>
+  
+  <div class="weather-grid">
+    <div class="weather-card">
+      <div class="weather-icon"><i class="fas fa-temperature-high"></i></div>
+      <div class="weather-value" id="temperature">-- °C</div>
+      <div class="weather-label">Temperature</div>
+    </div>
+    <div class="weather-card">
+      <div class="weather-icon"><i class="fas fa-droplet"></i></div>
+      <div class="weather-value" id="humidity">-- %</div>
+      <div class="weather-label">Humidity</div>
+    </div>
+    <div class="weather-card">
+      <div class="weather-icon"><i class="fas fa-wind"></i></div>
+      <div class="weather-value" id="wind">-- km/h</div>
+      <div class="weather-label">Wind Speed</div>
+    </div>
+    <div class="weather-card">
+      <div class="weather-icon" id="weatherIcon"><i class="fas fa-cloud"></i></div>
+      <div class="weather-value" id="condition">--</div>
+      <div class="weather-label">Condition</div>
+    </div>
+  </div>
+
+  <div class="forecast">
+    <h3>🌤 3-Day Forecast</h3>
+    <div class="forecast-grid" id="forecastGrid"></div>
+  </div>
+
+  <div class="description" id="description">--</div>
+</section>
+
+<footer>
+  <p>Powered by Open-Meteo & NASA POWER | Designed for the NASA Space Apps Challenge 🚀</p>
+</footer>
+
+<script>
+document.getElementById("searchBtn").addEventListener("click", async () => {
+  const location = document.getElementById("locationInput").value.trim();
+  const loading = document.getElementById("loading");
+  const errorMessage = document.getElementById("errorMessage");
+  const section = document.getElementById("weatherSection");
+  if (!location) return;
+
+  loading.style.display = "block";
+  errorMessage.style.display = "none";
+  section.style.display = "none";
+
+  try {
+    // Step 1: Get coordinates
+    const geoRes = await fetch(https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)});
+    const geoData = await geoRes.json();
+    if (!geoData.length) throw new Error("Location not found");
+    const lat = geoData[0].lat;
+    const lon = geoData[0].lon;
+
+    // Step 2: Fetch current weather data
+    const weatherRes = await fetch(https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min&forecast_days=3);
+    const weatherData = await weatherRes.json();
+    const current = weatherData.current;
+    const daily = weatherData.daily;
+
+    const weatherDesc = {
+      0: ["Clear sky", "fa-sun"],
+      1: ["Mainly clear", "fa-sun"],
+      2: ["Partly cloudy", "fa-cloud-sun"],
+      3: ["Overcast", "fa-cloud"],
+      45: ["Fog", "fa-smog"],
+      51: ["Light drizzle", "fa-cloud-rain"],
+      61: ["Rain showers", "fa-cloud-showers-heavy"],
+      71: ["Snowfall", "fa-snowflake"],
+      80: ["Rain showers", "fa-cloud-showers-heavy"],
+      95: ["Thunderstorm", "fa-bolt"]
+    };
+
+    // Step 3: Display
+    document.getElementById("regionName").textContent = location;
+    document.getElementById("temperature").textContent = ${current.temperature_2m} °C;
+    document.getElementById("humidity").textContent = ${current.relative_humidity_2m} %;
+    document.getElementById("wind").textContent = ${current.wind_speed_10m} km/h;
+    const [desc, icon] = weatherDesc[current.weathercode] || ["Unknown", "fa-cloud"];
+    document.getElementById("condition").textContent = desc;
+    document.getElementById("weatherIcon").innerHTML = <i class="fas ${icon}"></i>;
+
+    // Forecast
+    const forecastGrid = document.getElementById("forecastGrid");
+    forecastGrid.innerHTML = "";
+    for (let i = 0; i < 3; i++) {
+      const day = new Date(daily.time[i]).toLocaleDateString("en-US", { weekday: "short" });
+      const max = daily.temperature_2m_max[i];
+      const min = daily.temperature_2m_min[i];
+      forecastGrid.innerHTML += <div class="forecast-day"><strong>${day}</strong>${max}° / ${min}°</div>;
+    }
+
+    // Description
+    document.getElementById("description").textContent =
+      `Currently in ${location}, the weather is ${desc.toLowerCase()} with a temperature of ${current.temperature_2m}°C, humidity at ${current.relative_humidity_2m}%, and wind speeds around ${current.wind_speed_10m} km/h. 
+      In the coming days, temperatures will range between ${daily.temperature_2m_min[0]}°C and ${daily.temperature_2m_max[0]}°C — reflecting local atmospheric dynamics influenced by global climate trends.`;
+
+    section.style.display = "block";
+  } catch (err) {
+    errorMessage.textContent = err.message;
+    errorMessage.style.display = "block";
+  } finally {
+    loading.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>
