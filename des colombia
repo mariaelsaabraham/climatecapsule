@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Columbia Glacier</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, #1a5276, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .location-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .location-btn {
+            background-color: white;
+            border: 2px solid #3498db;
+            color: #1a5276;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .location-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .location-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .location-content {
+            display: none;
+        }
+        
+        .location-content.active {
+            display: block;
+        }
+        
+        .location-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .location-info h2 {
+            color: #1a5276;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .comparison-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .comparison-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comparison-header {
+            background-color: #1a5276;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-caption {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .data-source {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .impact-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .impact-section h2 {
+            color: #1a5276;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .impact-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .impact-card h3 {
+            color: #1a5276;
+            margin-bottom: 0.5rem;
+        }
+        
+        .call-to-action {
+            text-align: center;
+            background: linear-gradient(to right, #1a5276, #3498db);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .call-to-action h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: #1a5276;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #f0f8ff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: #1a5276;
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .comparison-container {
+                flex-direction: row;
+            }
+            
+            .comparison-item {
+                flex: 1;
+            }
+        }
+    </style>
+<body>
+    <header>
+        <h1>Columbia Glacier, Alaska</h1>
+        <p class="subtitle">Visualizing glacier retreat over time</p>
+    </header>
+
+    <div class="container">
+        <section class="location-info">
+            <p>The Columbia Glacier is a large tidewater glacier in Prince William Sound...</p>
+        </section>
+
+        <section class="comparison-container">
+            <div class="comparison-item">
+                <div class="comparison-header">
+                    <h3>1986</h3>
+                </div>
+                <div class="image-container">
+                    <img src="image/c1.png" alt="Columbia Glacier in 1986">
+                </div>
+                <div class="image-caption">
+                    The Columbia Glacier extends far into Columbia Bay, with a relatively intact terminus.
+                </div>
+            </div>
+
+            <div class="comparison-item">
+                <div class="comparison-header">
+                    <h3>2022</h3>
+                </div>
+                <div class="image-container">
+                    <img src="image/c2.png" alt="Columbia Glacier in 2022">
+                </div>
+                <div class="image-caption">
+                    The glacier has retreated dramatically, with the terminus now far up the fjord.
+                </div>
+            </div>
+        </section>
+
+        <a href="homepagedark.html" class="btn">Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Data Source: NASA Earth Observatory</p>
+    </footer>
+      <div class="data-source">
+            <p>Satellite imagery source: NASA Earth Observatory</p>
+        </div>
+        
+        <section class="impact-section">
+            <h2>Environmental Impacts</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h3>Sea Level Rise</h3>
+                    <p>As glaciers and ice sheets melt, they contribute directly to global sea level rise, threatening coastal communities worldwide.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Biodiversity Loss</h3>
+                    <p>Habitat destruction and changing conditions threaten countless species with extinction, disrupting ecosystems.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Albedo Effect</h3>
+                    <p>As reflective ice is replaced by darker water or land, less sunlight is reflected back to space, accelerating warming.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Extreme Weather</h3>
+                    <p>Climate change intensifies hurricanes, droughts, heatwaves, and floods, causing widespread damage and displacement.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="call-to-action">
+            <h2>Be Part of the Solution</h2>
+            <p>While the changes we see in these images can be alarming, there is still time to take action. Every effort to reduce our carbon footprint matters.</p>
+            <a href="https://climate.nasa.gov/solutions/" class="btn" target="_blank">Learn How You Can Help</a>
+        </section>
+    </div>
+</body>
+</html>
